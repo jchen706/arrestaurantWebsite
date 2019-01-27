@@ -1,0 +1,47 @@
+body {
+    display: flex;
+    height: 100vh;
+    width: 100%;
+    flex-direction: column;
+    background: rgb(52, 135, 87);
+    color: white;
+}
+
+.input-group {
+    float: right;
+}
+
+#name {
+    cursor: pointer;
+}
+
+#git :hover {
+    cursor: pointer;
+}
+
+#img4:hover {
+    cursor: pointer;
+    border-width: 15px !important;
+}
+
+#uploadImage {
+    border: 2px dotted;
+    border-radius: 10%;
+}
+
+#output {
+    min-width: 200px;
+    min-height: 200px;
+    max-height: 400px;
+    height: auto;
+    background: gray;
+}
+
+#modalButton {
+    margin-left: 55px;
+    margin-top: 90px;
+}
+
+modal {
+    color: rgb(52, 135, 87) !important;
+}

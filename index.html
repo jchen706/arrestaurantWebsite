@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="Jun Chen">
+
+    <title></title>
+
+    <!-- Latest compiled and minified CSS and Bootstrap -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+
+    <script src="https://sdk.amazonaws.com/js/aws-sdk-2.283.1.min.js"></script>
+    <script type="text/javascript" src="https://sdk.clarifai.com/js/clarifai-latest.js"></script>
+
+    <link rel="stylesheet" href="index.css" />
+    <script src="index.js"></script>
+
+
+
+
+
+</head>
+
+<body>
+
+    <header class="page-header" style="text-align: center;">
+        <h1 class="display-4">AR.Restaurant</h1>
+    </header>
+
+
+
+    <div class="container mt-4">
+        <div class="row">
+            <div class="col-md-6 d-flex justify-content-center" style="height: fit-content;">
+                <div class="row">
+                    <div class="col-md-12 d-flex justify-content-center">
+
+                        <h3><i>Nutrition</i></h3>
+
+                    </div>
+                    <div class="col-md-12 d-flex justify-content-center">
+                        <p>Upload an image to start the demo.</p>
+                    </div>
+                    <div class="col-md-12 d-flex justify-content-center mt-3">
+                        <img class="img-thumbnail img-fluid. max-width: 100%" id="output" />
+                    </div>
+                    <div class="col-md-12 d-flex justify-content-center">
+                        <h5 class="mt-3" id="imageName">No Valid Image Uploaded.</h5>
+                    </div>
+                    <div class="input-group mb-3 mt-5">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">Upload</span>
+                        </div>
+                        <div class="custom-file">
+                            <input type="file" class="custom-file-input" accept="image/*" name="image" id="files" onchange="encodeImageFileAsURL(this)" id="imageName">
+                            <label class="custom-file-label" for="file" id="imageName">Upload Image</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6 d-flex justify-content-center" style="height: fit-content;">
+                <div class="col-md-12 d-flex justify-content-center" id="modalButton">
+
+                    <button id="myBtn" type="button" class="btn btn-info btn-sm" data-toggle="modal" id="modalbtn" data-target="#myModal">
+                        <h5 class="display-4"">Nutrition Information</h5>
+                    </button>
+
+
+                    <!-- Modal -->
+                    <div class=" modal fade" id="myModal" tabindex="-1" role="dialog">
+                            <div class="modal-dialog modal-lg ">
+
+                                <!-- Modal content-->
+                                <div class="modal-content" style="color: gray;">
+                                    <div class="modal-body">
+
+                                        <div class="row">
+                                            <div class="col-md-3" id="intro-pic">
+                                                <img onclick="speak()" id='img4' src="logo.png" class="img-fluid border border-warning rounded shadow-lg p-3 mb-5" alt="Responsive image">
+
+
+                                                <h3 id='foodName'>AR.Resturant</h3>
+                                            </div>
+                                            <div class="col-md-8">
+                                                <h1 class="intro-h"> Nutrition </h1>
+                                                <table class="table">
+                                                    <thead>
+                                                        <tr>
+                                                            <th scope="row">Calories</th>
+                                                            <td id="calories1">0</td>
+
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <th scope="row">Total Fat</th>
+                                                            <td id="fat">0g</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th scope="row">Cholestral</th>
+                                                            <td id="cholestral">0g</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th scope="row">Sodium</th>
+                                                            <td id="sodium">0g</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th scope="row">Total Carbohydrates</th>
+                                                            <td id="carbohydrates">0g</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th scope="row">Protein</th>
+                                                            <td id="protein">0g</td>
+                                                        </tr>
+                                                        <hr />
+                                                        <tr>
+                                                            <th scope="row">Calcium</th>
+                                                            <td id="calcium">0%</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th scope="row">Vitamin D</th>
+                                                            <td id="vitaD">0%</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th scope="row">Vitamin A</th>
+                                                            <td id='vitaA'>0%</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+        <audio id='fun' class="track" src="" type="audio/mpeg">
+        </audio>
+        <script>
+            document.getElementById("myBtn").disabled = true;
+
+            // // Initialize the Amazon Cognito credentials provider
+            // // Initialize the Amazon Cognito credentials provider
+
+            AWS.config.accessKeyId = 'AKIAJ7OHJBLBT3HSMBIA';
+            AWS.config.secretAccessKey = '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';
+            AWS.config.region = 'us-east-1'; // Region
+
+
+
+            // // AWS.config.credentials = new AWS.CognitoIdentityCredentials({
+            // //     IdentityPoolId: 'us-east-1:dcc591c0-5884-49a6-abcf-2b690d2f9ee9',
+            // // });
+            //
+
+            // speechParams.Text = document.getElementById("textEntry").value;
+            //
+            // // Create the Polly service object and presigner object
+            // var polly = new AWS.Polly({
+            //     apiVersion: '2016-06-10'
+            // });
+            // var signer = new AWS.Polly.Presigner(speechParams, polly)
+            //
+            // // Create presigned URL of synthesized speech file
+            // signer.getSynthesizeSpeechUrl(speechParams, function(error, url) {
+            //     if (error) {
+            //         document.getElementById('result').innerHTML = error;
+            //     } else {
+            //         audioSource.src = url;
+            //         document.getElementById('result').innerHTML = "Speech ready to play.";
+            //         audioSource.play();
+            //     }
+            // });
+        </script>
+</body>
+
+</html>
